@@ -1,5 +1,5 @@
-## v1.0.0 / October 27, 2014
-- initial release
+## v0.1.0 / October 29, 2014
+- initial commits
 
 
 [npmjs-url]: http://npm.im/gitclone

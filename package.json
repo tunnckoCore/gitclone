@@ -1,10 +1,10 @@
 {
   "name": "gitclone",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Clone a Github repository with only `username/repo` and support options",
   "main": "index.js",
   "scripts": {
-    "lint": "jshint ./*.js",
+    "lint": "jshint ./**/*.js",
     "test": "node test.js"
   },
   "author": {

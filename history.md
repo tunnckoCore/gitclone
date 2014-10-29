@@ -1,3 +1,6 @@
+## v1.0.1 / October 30, 2014
+- fix travis.yml, cuzing build errors
+
 ## v1.0.0 / October 30, 2014
 - press release, LOL
 - first release

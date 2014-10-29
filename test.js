@@ -17,6 +17,6 @@ var clone = gitclone('tunnckoCore/week-seconds')
 
 clone
   .then(function(res) {
-    assert.ok(res[1] === 'tunnckoCore/week-seconds')
+    assert(res[1] === 'tunnckoCore/week-seconds')
   })
   .catch(console.error)

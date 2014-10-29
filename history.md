@@ -1,6 +1,10 @@
+## v1.0.0 / October 30, 2014
+- press release, LOL
+- first release
+- npm publish
+
 ## v0.2.0 / October 30, 2014
 - init release
-- npm publish
 
 ## v0.1.0 / October 29, 2014
 - initial commits

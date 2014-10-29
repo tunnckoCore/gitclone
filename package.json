@@ -1,6 +1,6 @@
 {
   "name": "gitclone",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Clone a Github repository with only `username/repo` and support options",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,9 @@
     "minimist": "*",
     "native-or-another": "*"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "micropromise": "*"
+  },
   "licenses": [{
     "type": "MIT",
     "url": "https://github.com/tunnckoCore/gitclone/blob/master/license.md"

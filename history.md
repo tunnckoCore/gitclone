@@ -1,3 +1,7 @@
+## v1.0.2 / October 30, 2014
+- again fix travis.yml, failing because of v0.10 version
+- add `micropromise` to devDeps
+
 ## v1.0.1 / October 30, 2014
 - fix travis.yml, cuzing build errors
 - press release, LOL

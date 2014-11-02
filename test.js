@@ -17,6 +17,8 @@ var clone = gitclone('tunnckoCore/week-seconds')
 
 clone
   .then(function(res) {
-    assert(res[1] === 'tunnckoCore/week-seconds')
+    //=> res == see lib/clone.js#L19
+    // [command, repository, destination, branch, ssh];
+    assert(res[1] === 'tunnckoCore/week-seconds') //repository
   })
   .catch(console.error)

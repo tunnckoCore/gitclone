@@ -13,11 +13,11 @@
 
 var spawn = require('child_process').spawn;
 var Promise = require('native-or-another');
-var clone = require('./lib/clone');
+var gitclone = require('./lib/gitclone');
 
-module.exports = function gitclone(repository, destination, branch, ssh) {
+module.exports = function gitClone(repository, destination, branch, ssh) {
   var args = [].slice(arguments,0)
-  var flags = clone(repository, destination, branch, ssh)[0];
+  var flags = gitclone(repository, destination, branch, ssh)[0];
 
   return new Promise(function(resolve, reject) {
     var proc = spawn('git', flags, {

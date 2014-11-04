@@ -1,3 +1,9 @@
+## v1.0.3 / November 4, 2014
+- my style-guide driven changes at all
+- move `test.js` to `test/test.js`
+- add `preferGlobal: true` in package.json
+- add engines in package.json
+
 ## v1.0.2 / October 30, 2014
 - again fix travis.yml, failing because of v0.10 version
 - add `micropromise` to devDeps

@@ -13,7 +13,7 @@
  */
 
 var spawn = require('child_process').spawn
-var clone = require('../lib/clone');
+var gitclone = require('../lib/gitclone');
 var argv = require('minimist')(process.argv.slice(2));
 
 var repo    = argv._[0] || argv.r || argv.repo;
@@ -21,7 +21,7 @@ var dest    = argv._[1] || argv.d || argv.dest;
 var branch  = argv._[2] || argv.b || argv.branch;
 var ssh     = argv._[3] || argv.s || argv.ssh;
 
-var flags = clone(repo, dest, branch, ssh)[0];
+var flags = gitclone(repo, dest, branch, ssh)[0];
 
 var proc = spawn('git', flags, {
   stdio: 'inherit'

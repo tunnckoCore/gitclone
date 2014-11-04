@@ -10,12 +10,12 @@
 /**
  * Module dependencies.
  */
-var gitclone = require('./index');
+var gitclone = require('../index');
 var assert = require('assert');
 
-var clone = gitclone('tunnckoCore/week-seconds')
+var clonePromise = gitclone('tunnckoCore/week-seconds')
 
-clone
+clonePromise
   .then(function(res) {
     //=> res == see lib/clone.js#L19
     // [command, repository, destination, branch, ssh];

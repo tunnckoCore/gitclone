@@ -1,11 +1,11 @@
 {
   "name": "gitclone",
   "version": "1.0.2",
-  "description": "Clone a Github repository with only `username/repo` and support options",
+  "description": "Clone a Github repository with only `username/repo`. Support CLI.",
   "main": "index.js",
   "scripts": {
     "lint": "jshint ./**/*.js",
-    "test": "node test.js"
+    "test": "node test/test.js"
   },
   "author": {
     "name": "Charlike Make Reagent",
@@ -19,7 +19,13 @@
   },
   "keywords": [
     "git",
+    "cli",
+    "support",
+    "helper",
     "github",
+    "utils",
+    "utility",
+    "util",
     "clone",
     "repo",
     "repository"
@@ -35,7 +41,12 @@
     "type": "MIT",
     "url": "https://github.com/tunnckoCore/gitclone/blob/master/license.md"
   }],
+  "engines": {
+    "node": ">= 0.10.0",
+    "npm": ">= 1.4.28"
+  },
   "bin": {
     "gitclone": "bin/cli.js"
-  }
+  },
+  "preferGlobal": "true"
 }

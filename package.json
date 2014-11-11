@@ -1,7 +1,7 @@
 {
   "name": "gitclone",
   "version": "1.0.3",
-  "description": "Clone a Github repository with only `username/repo`. Support CLI.",
+  "description": "Clone a Github repository with only `username/repo`. Support CLI and Promise.",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf node_modules week-seconds",
@@ -29,7 +29,11 @@
     "util",
     "clone",
     "repo",
-    "repository"
+    "repository",
+    "promise",
+    "promises",
+    "promises-aplus",
+    "Promises/A+"
   ],
   "dependencies": {
     "minimist": "*",

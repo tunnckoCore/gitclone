@@ -1,6 +1,6 @@
 {
   "name": "gitclone",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Clone a Github repository with only `username/repo`. Support CLI and Promise.",
   "main": "index.js",
   "scripts": {

@@ -33,11 +33,12 @@ $ gitclone --branch v6.0.0 --repo assemble/assemble --ssh --dest mysite
 var gitclone = require('./index');
 var assert = require('assert');
 
+//gitclone(repository, destination, branch, ssh)
 var clone = gitclone('tunnckoCore/week-seconds')
 
 clone
   .then(function(res) {
-    //=> res == [command, repository, destination, branch, ssh]
+    //=> res == [command, repository, destination, branch]
     assert(res[1] === 'tunnckoCore/week-seconds') //repository
   })
   .catch(console.error)

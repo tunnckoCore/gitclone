@@ -12,14 +12,24 @@
  */
 
 var spawn = require('child_process').spawn;
-var Promise = require('native-or-another');
+var Promize = require('native-or-another');
 var gitclone = require('./lib/gitclone');
+var slice = require('sliced');
 
-module.exports = function gitClone(repository, destination, branch, ssh) {
-  var args = [].slice(arguments,0)
-  var flags = gitclone(repository, destination, branch, ssh)[0];
+/**
+ * Clone Github repository for the given `username/repo`
+ * 
+ * @param {String} `repository`
+ * @param {String} `destination`
+ * @param {String} `branch`
+ * @param {Boolean} `ssh`
+ * @return {Promise}
+ */
+module.exports = function gitClone() {
+  var args = slice(arguments);
+  var flags = gitclone(args[0], args[1], args[2], args[3])[0];
 
-  return new Promise(function(resolve, reject) {
+  return new Promize(function(resolve, reject) {
     var proc = spawn('git', flags, {
       stdio: 'inherit'
     })
@@ -27,7 +37,7 @@ module.exports = function gitClone(repository, destination, branch, ssh) {
       reject(err)
     })
     proc.on('exit', function (code) {
-      if (code != 0) {reject(code)}
+      if (code !== 0) {reject(code)}
       else {resolve(flags)}
       process.exit(code)
     })

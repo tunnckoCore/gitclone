@@ -17,8 +17,8 @@
 *.vi
 *.yo-rc.json
 *.zip
-*.coveralls.yml
 *.idea
+*.coveralls.yml
 
 # Always-ignore dirs and files
 _gh_pages
@@ -35,4 +35,6 @@ tmp
 
 npm-debug.log
 Thumbs.db
-weeks-seconds
+
+build
+week-seconds

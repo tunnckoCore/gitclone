@@ -30,6 +30,6 @@ proc.on('error', function(err) {
   console.error(err)
 })
 proc.on('exit', function (code) {
-  if (code != 0) {console.error(code)}
+  if (code !== 0) {console.error(code)}
   process.exit(code)
 })

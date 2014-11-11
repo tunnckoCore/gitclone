@@ -4,8 +4,9 @@
   "description": "Clone a Github repository with only `username/repo`. Support CLI.",
   "main": "index.js",
   "scripts": {
-    "lint": "jshint ./**/*.js",
-    "test": "node test/test.js"
+    "clean": "rm -rf node_modules week-seconds",
+    "lint": "npm run clean && npm install && jshint bin/*.js lib/*.js test/*.js index.js",
+    "test": "npm run lint && node test/test.js"
   },
   "author": {
     "name": "Charlike Make Reagent",
@@ -32,15 +33,19 @@
   ],
   "dependencies": {
     "minimist": "*",
-    "native-or-another": "*"
+    "native-or-another": "*",
+    "sliced": "*"
   },
   "devDependencies": {
-    "micropromise": "*"
+    "micropromise": "*",
+    "jshint": "*"
   },
-  "licenses": [{
-    "type": "MIT",
-    "url": "https://github.com/tunnckoCore/gitclone/blob/master/license.md"
-  }],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/tunnckoCore/gitclone/blob/master/license.md"
+    }
+  ],
   "engines": {
     "node": ">= 0.10.0",
     "npm": ">= 1.4.28"

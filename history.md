@@ -1,8 +1,3 @@
-## v1.0.4 / November 11, 2014
-- fix `-b`|`--branch`, not works
-- normalize dotfiles & package.json
-- add `sliced` as dep because of "*This function has too many parameters. (4)*", LOL ;p
-
 ## v1.0.3 / November 4, 2014
 - my style-guide driven changes at all
 - move `test.js` to `test/test.js`

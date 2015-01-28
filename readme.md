@@ -4,12 +4,12 @@
 
 ## Install
 ```bash
-npm install gitclone
+npm i --save gitclone
 npm test
 ```
 
 
-## Usage
+## API
 > For more use-cases see the [tests](./test.js)
 
 ```js
@@ -17,7 +17,7 @@ var gitclone = require('gitclone');
 ```
 
 
-## API / CLI
+## Examples
 
 ```js
 gitclone('tunnckoCore/async-exec-cmd', {ssh: true, dest: '../async-exec-cmd/'})
@@ -97,4 +97,4 @@ Released under the [`MIT`][license-url] license.
 
 ***
 
-_Powered and automated by [kdf](https://github.com/tunnckoCore), January 22, 2015_
+_Powered and automated by [kdf](https://github.com/tunnckoCore), January 28, 2015_

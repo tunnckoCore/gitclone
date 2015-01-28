@@ -1,95 +1,62 @@
-# gitclone [![NPM version][npmjs-shields]][npmjs-url] [![Build Status][travis-img]][travis-url] [![Dependency Status][depstat-img]][depstat-url]
-> Clone a Github repository with only `username/repo` and support options.
-Support CLI and Promise.
+## [![npm][npmjs-img]][npmjs-url] [![mit license][license-img]][license-url] [![build status][travis-img]][travis-url] [![coverage status][coveralls-img]][coveralls-url] [![deps status][daviddm-img]][daviddm-url]
 
-## Install [![Nodei.co stats][npmjs-install]][npmjs-url]
-> Install with [npm](https://npmjs.org)
+> Clone a Github repository programmatically. Hybrid, Async and Promise API
 
-```
-$ npm install gitclone -g
-```
-
-
-## Flags
-> Flags can be used in any order.
-
-- `-d`|`--dest` **{String}** local destionation path
-- `-r`|`--repo` **{String}** the repository to clone
-- `-b`|`--branch` **{String}** the branch to clone
-- `-s`|`--ssh` **{Boolean}** clone via SSH or HTTPS
-
-
-## CLI Usage
-
-```
-$ gitclone gulpjs/gulp
-$ gitclone tunnckoCore/koa-better-body --branch v1.0.0
-$ gitclone substack/minimist --dest cmds
-$ gitclone userName/myAwesomeRepo --ssh --dest awesomeRepo
-$ gitclone --branch v6.0.0 --repo assemble/assemble --ssh --dest mysite
+## Install
+```bash
+npm install gitclone
+npm test
 ```
 
-## Usage as module
+
+## Usage
+> For more use-cases see the [tests](./test.js)
+
 ```js
-var gitclone = require('./index');
-var assert = require('assert');
-
-//gitclone(repository, destination, branch, ssh)
-var clone = gitclone('tunnckoCore/week-seconds')
-
-clone
-  .then(function(res) {
-    //=> res == [command, repository, destination, branch]
-    assert(res[1] === 'tunnckoCore/week-seconds') //repository
-  })
-  .catch(console.error)
+var gitclone = require('gitclone');
 ```
 
-## Authors & Contributors [![author tips][author-gittip-img]][author-gittip]
 
+## API / CLI
+
+
+## Author
 **Charlike Mike Reagent**
-+ [gittip/tunnckoCore][author-gittip]
-+ [github/tunnckoCore][author-github]
++ [gratipay/tunnckoCore][author-gratipay]
 + [twitter/tunnckoCore][author-twitter]
++ [github/tunnckoCore][author-github]
 + [npmjs/tunnckoCore][author-npmjs]
++ [more ...][contrib-more]
 
 
 ## License [![MIT license][license-img]][license-url]
-Copyright (c) 2014 [Charlike Mike Reagent][author-website], [contributors](https://github.com/tunnckoCore/gitclone/graphs/contributors).  
+Copyright (c) 2014-2015 [Charlike Mike Reagent][contrib-more], [contributors][contrib-graf].  
 Released under the [`MIT`][license-url] license.
 
 
-
 [npmjs-url]: http://npm.im/gitclone
-[npmjs-shields]: http://img.shields.io/npm/v/gitclone.svg
-[npmjs-install]: https://nodei.co/npm/gitclone.svg?mini=true
+[npmjs-img]: https://img.shields.io/npm/v/gitclone.svg?style=flat&label=gitclone
 
 [coveralls-url]: https://coveralls.io/r/tunnckoCore/gitclone?branch=master
-[coveralls-shields]: https://img.shields.io/coveralls/tunnckoCore/gitclone.svg
+[coveralls-img]: https://img.shields.io/coveralls/tunnckoCore/gitclone.svg?style=flat
 
 [license-url]: https://github.com/tunnckoCore/gitclone/blob/master/license.md
-[license-img]: http://img.shields.io/badge/license-MIT-blue.svg
+[license-img]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat
 
 [travis-url]: https://travis-ci.org/tunnckoCore/gitclone
-[travis-img]: https://travis-ci.org/tunnckoCore/gitclone.svg?branch=master
+[travis-img]: https://img.shields.io/travis/tunnckoCore/gitclone.svg?style=flat
 
-[depstat-url]: https://david-dm.org/tunnckoCore/gitclone
-[depstat-img]: https://david-dm.org/tunnckoCore/gitclone.svg
+[daviddm-url]: https://david-dm.org/tunnckoCore/gitclone
+[daviddm-img]: https://img.shields.io/david/tunnckoCore/gitclone.svg?style=flat
 
-[author-gittip-img]: http://img.shields.io/gittip/tunnckoCore.svg
-[author-gittip]: https://www.gittip.com/tunnckoCore
-[author-github]: https://github.com/tunnckoCore
+[author-gratipay]: https://gratipay.com/tunnckoCore
 [author-twitter]: https://twitter.com/tunnckoCore
-
-[author-website]: http://www.whistle-bg.tk
+[author-github]: https://github.com/tunnckoCore
 [author-npmjs]: https://npmjs.org/~tunnckocore
 
-[cobody-url]: https://github.com/tj/co-body
-[mocha-url]: https://github.com/tj/mocha
-[rawbody-url]: https://github.com/stream-utils/raw-body
-[multer-url]: https://github.com/expressjs/multer
-[express-url]: https://github.com/strongloop/express
-[formidable-url]: https://github.com/felixge/node-formidable
-[co-url]: https://github.com/tj/co
-[extend-url]: https://github.com/justmoon/node-extend
-[csp-report]: https://mathiasbynens.be/notes/csp-reports
+[contrib-more]: http://j.mp/1stW47C
+[contrib-graf]: https://github.com/tunnckoCore/gitclone/graphs/contributors
+
+***
+
+_Powered and automated by [kdf](https://github.com/tunnckoCore), January 22, 2015_

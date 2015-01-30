@@ -6,14 +6,15 @@
  */
 
 'use strict';
-
-var path = require('path')
+var path = require('path');
 var fmt = require('util').format;
-var execCmd = require('exec-cmd');
+// var del = require('rimraf-then'); // ????
+var run = require('exec-cmd');
+// var cwd = require('cwd'); // ????
 var stringify = require('stringify-github-short-url');
 var handleArguments = require('handle-arguments');
 
-var errs = require('handle-errors')('gitclone');
+var errs = require('handle-errors')('gitclone', true);
 var error = errs.error;
 var type = errs.type;
 
@@ -23,8 +24,31 @@ module.exports = function gitclone() {
   var args = checkArguments(argz.args);
   args = buildArguments(args);
 
-  return execCmd(args.cmd, args.opts, argz.callback);
+  return run(args.cmd, args.opts, argz.callback)
+  // .then(checkoutBranch(args));
 };
+
+// workaround for branching
+function checkoutBranch(args) {
+  return function _then(res) {
+    if (args.res.branch) {
+      var root = cwd();
+      process.chdir(cwd(args.dest));
+      var cmd = 'git checkout ' + args.res.branch;
+
+      return run(cmd, {stdio: [null, null, null]}).catch(function(err) {
+        console.log(root + '/' + args.dest);
+        del(root + '/' + args.dest)
+        return res;
+      })
+    }
+    return res;
+  }
+}
+
+function checkBranchExist(pattern) {
+
+}
 
 /**
  * > Build and structure normalized arguments.
@@ -41,7 +65,10 @@ function buildArguments(args) {
   var cmd = fmt('%s %s%s/%s.git', git, url, data.user, data.repo);
   cmd = dest ? fmt('%s %s', cmd, dest) : cmd;
 
+  args.dest = dest ? dest : data.repo;
+  args.cmd = cmd;
   args.cmd = data.branch ? fmt('%s -b %s', cmd, data.branch) : cmd;
+  // args.cmd = data.branch ? fmt('%s -b %s', cmd, data.branch) : cmd;
   args.opts.stdio = args.opts.stdio ? args.opts.stdio : 'inherit';
   return args;
 }

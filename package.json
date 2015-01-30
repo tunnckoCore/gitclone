@@ -29,7 +29,7 @@
     "stringify-github-short-url": "~1.0.3"
   },
   "devDependencies": {
-    "bluebird": "^2.9.3",
+    "bluebird": "^2.4.1",
     "istanbul-harmony": "^0.3.1",
     "mocha": "*",
     "mocha-lcov-reporter": "^0.0.1"

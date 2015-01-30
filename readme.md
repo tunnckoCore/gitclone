@@ -3,7 +3,7 @@
 > Clone a Github repository programmatically. Hybrid, Async and Promise API
 
 ## Install
-```bash
+```
 npm i --save gitclone
 npm test
 ```
@@ -22,9 +22,9 @@ var gitclone = require('gitclone');
 ```js
 gitclone('tunnckoCore/async-exec-cmd', {ssh: true, dest: '../destination/'})
 gitclone('tunnckoCore/async-exec-cmd', function cb() {})
-gitclone('koajs/koa#v0.11.0', 'releases/v0.11.0')
-gitclone('koajs/koa#v0.12.0', 'releases/v0.12.0')
-gitclone('koajs/koa#v0.13.0', 'releases/v0.13.0')
+gitclone('koajs/koa#0.14.0', 'releases/v0.14.0')
+gitclone('koajs/koa#0.15.0', 'releases/v0.15.0')
+gitclone('koajs/koa#0.16.0', 'releases/v0.16.0')
 gitclone('tunnckoCore/npmls', 'dest/to/path2', true)
 gitclone('tunnckoCore/npmls', 'dest/to/path3', {stdio: 'inherit1'})
 gitclone('tunnckoCore/npmls', {stdio: 'inherit2'}, true)

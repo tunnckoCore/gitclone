@@ -25,7 +25,7 @@
   "dependencies": {
     "exec-cmd": "~2.0.0",
     "handle-arguments": "~2.0.0",
-    "handle-errors": "^0.0.2",
+    "handle-errors": "~1.0.0",
     "stringify-github-short-url": "~1.0.3"
   },
   "devDependencies": {

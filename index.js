@@ -6,17 +6,15 @@
  */
 
 'use strict';
+
 var path = require('path');
 var fmt = require('util').format;
-// var del = require('rimraf-then'); // ????
 var run = require('exec-cmd');
-// var cwd = require('cwd'); // ????
-var stringify = require('stringify-github-short-url');
 var handleArguments = require('handle-arguments');
-
-var errs = require('handle-errors')('gitclone', true);
-var error = errs.error;
-var type = errs.type;
+var stringify = require('stringify-github-short-url');
+var handleErrors = require('handle-errors')('gitclone');
+var error = handleErrors.error;
+var type = handleErrors.type;
 
 // docs
 module.exports = function gitclone() {
@@ -24,54 +22,8 @@ module.exports = function gitclone() {
   var args = checkArguments(argz.args);
   args = buildArguments(args);
 
-  return run(args.cmd, args.opts, argz.callback)
-  // .then(checkoutBranch(args));
+  return run(args.cmd, args.opts, argz.callback);
 };
-
-// workaround for branching
-function checkoutBranch(args) {
-  return function _then(res) {
-    if (args.res.branch) {
-      var root = cwd();
-      process.chdir(cwd(args.dest));
-      var cmd = 'git checkout ' + args.res.branch;
-
-      return run(cmd, {stdio: [null, null, null]}).catch(function(err) {
-        console.log(root + '/' + args.dest);
-        del(root + '/' + args.dest)
-        return res;
-      })
-    }
-    return res;
-  }
-}
-
-function checkBranchExist(pattern) {
-
-}
-
-/**
- * > Build and structure normalized arguments.
- *
- * @param  {Array} `<args>`
- * @return {Object}
- * @api private
- */
-function buildArguments(args) {
-  var dest = args.dest || args.opts.dest;
-  var data = args.res;
-  var git = 'git clone';
-  var url = args.opts.ssh ? 'git@github.com:' : 'https://github.com/';
-  var cmd = fmt('%s %s%s/%s.git', git, url, data.user, data.repo);
-  cmd = dest ? fmt('%s %s', cmd, dest) : cmd;
-
-  args.dest = dest ? dest : data.repo;
-  args.cmd = cmd;
-  args.cmd = data.branch ? fmt('%s -b %s', cmd, data.branch) : cmd;
-  // args.cmd = data.branch ? fmt('%s -b %s', cmd, data.branch) : cmd;
-  args.opts.stdio = args.opts.stdio ? args.opts.stdio : 'inherit';
-  return args;
-}
 
 /**
  * > Create flexible arguments - check types and normalize incoming arguments.
@@ -105,6 +57,28 @@ function checkArguments(args) {
     dest: args[1] || '',
     opts: args[2]
   };
+}
+
+/**
+ * > Build and structure normalized arguments.
+ *
+ * @param  {Array} `<args>`
+ * @return {Object}
+ * @api private
+ */
+function buildArguments(args) {
+  var dest = args.dest || args.opts.dest;
+  var data = args.res;
+  var git = 'git clone';
+  var url = args.opts.ssh ? 'git@github.com:' : 'https://github.com/';
+  var cmd = fmt('%s %s%s/%s.git', git, url, data.user, data.repo);
+  cmd = dest ? fmt('%s %s', cmd, dest) : cmd;
+
+  args.dest = dest ? dest : data.repo;
+  args.cmd = cmd;
+  args.cmd = data.branch ? fmt('%s -b %s', cmd, data.branch) : cmd;
+  args.opts.stdio = args.opts.stdio ? args.opts.stdio : 'inherit';
+  return args;
 }
 
 /**

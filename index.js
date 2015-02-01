@@ -21,14 +21,14 @@ var type = handleErrors.type;
 // docs
 module.exports = function gitclone() {
   var argz = handleArguments(arguments);
-  var args = checkArguments(argz.args);
-  args = buildArguments(args);
+  argz = checkArguments(argz.args);
+  argz = buildArguments(argz);
 
-  return run(args.cmd, args.opts, argz.callback).catch(function(err) {
-    var dir = args.dest.split('/')[0];
-    if (arrayEqual(args.opts.stdio, [null, null, null])) {
+  return run(argz.cmd, argz.opts, argz.callback).catch(function(err) {
+    var dir = argz.dest.split('/')[0];
+    if (arrayEqual(argz.opts.stdio, [null, null, null])) {
       // jscs:disable maximumLineLength
-      console.log('fatal: Remote branch %s not found in upstream origin', args.res.branch);
+      console.log('fatal: Remote branch %s not found in upstream origin', argz.branch);
       // jscs:enable maximumLineLength
       rimraf.sync(dir);
       throw err;
@@ -46,51 +46,71 @@ module.exports = function gitclone() {
  * @api private
  */
 function checkArguments(args) {
-  if (!args[0]) {
+  args = mapArguments(args);
+
+  if (!args.pattern) {
     return error('should have at least 1 argument and he cant be function');
   }
-
-  if (typeOf(args[0]) === 'object') {
-    args = whenRepoObject(args);
+  if (typeOf(args.opts) === 'boolean') {
+    var o = typeOf(args.dest) === 'object' && args.dest || {};
+    o.ssh = args.opts;
+    args.opts = o;
   }
 
-  if (typeOf(args[1]) === 'object') {
+  if (typeOf(args.dest) === 'object') {
     args = whenDestObject(args);
   }
 
-  args[2] = typeOf(args[2]) !== 'object' ? {} : args[2];
-  args[0] = stringify.parse(args[0], args[2]);
+  if (typeOf(args.pattern) === 'object') {
+    args = whenRepoObject(args);
+  }
 
-  if (!stringify.test(args[0])) {
+  args.opts = typeOf(args.opts) !== 'object' ? {} : args.opts;
+  var parse = stringify.parse(args.pattern, args.opts);
+
+  if (!stringify.test(parse)) {
     return type('expect `repo` to be `user/repo(#branch)` string');
   }
 
   return {
-    res: args[0],
-    dest: args[1] || '',
-    opts: args[2]
+    user: parse.user,
+    repo: parse.repo,
+    branch: parse.branch,
+    dest: args.dest,
+    opts: args.opts
   };
 }
 
 /**
- * > Build and structure normalized arguments.
+ * Map arguments array to object with strict key names
  *
  * @param  {Array} `<args>`
  * @return {Object}
  * @api private
  */
-function buildArguments(args) {
-  var dest = args.dest || args.opts.dest;
-  var data = args.res;
-  var git = 'git clone';
-  var url = args.opts.ssh ? 'git@github.com:' : 'https://github.com/';
-  var cmd = fmt('%s %s%s/%s.git', git, url, data.user, data.repo);
-  cmd = dest ? fmt('%s %s', cmd, dest) : cmd;
+function mapArguments(args) {
+  return {
+    pattern: args[0],
+    dest: args[1] || '',
+    opts: args[2] || {}
+  };
+}
 
-  args.dest = dest ? dest : data.repo;
-  args.cmd = cmd;
-  args.cmd = data.branch ? fmt('%s -b %s', cmd, data.branch) : cmd;
-  args.opts.stdio = args.opts.stdio ? args.opts.stdio : 'inherit';
+/**
+ * > Structure, order/reorder arguments when
+ * second argument (dest) is object.
+ *
+ * @param  {Array} `<args>`
+ * @return {Array}
+ * @api private
+ */
+function whenDestObject(args) {
+  var cache = args.dest;
+  var opts = args.opts;
+
+  args.opts = cache;
+  args.opts.ssh = opts.ssh || args.opts.ssh;
+  args.dest = cache.dest || '';
   return args;
 }
 
@@ -103,36 +123,32 @@ function buildArguments(args) {
  * @api private
  */
 function whenRepoObject(args) {
-  var cache = args[0];
+  var cache = args.pattern;
 
-  if (typeOf(args[0].user) === 'string' && typeOf(args[0].repo) === 'string') {
-    args[0] = stringify(args[0]);
+  if (typeOf(cache.user) === 'string' && typeOf(cache.repo) === 'string') {
+    args.pattern = stringify(cache);
   }
 
-  args[2] = !args[2] ? (cache.options || cache) : args[2];
-  args[1] = args[2].dest || undefined;
-
+  var dest = cache.options && cache.options.dest;
+  args.dest = args.dest || cache.dest || dest || '';
   return args;
 }
 
 /**
- * > Structure, order/reorder arguments when
- * second argument (dest) is object.
+ * > Build and structure normalized arguments.
  *
  * @param  {Array} `<args>`
- * @return {Array}
+ * @return {Object}
  * @api private
  */
-function whenDestObject(args) {
-  var cache = args[1];
+function buildArguments(args) {
+  var git = 'git clone';
+  var url = args.opts.ssh ? 'git@github.com:' : 'https://github.com/';
+  var cmd = fmt('%s %s%s/%s.git', git, url, args.user, args.repo);
 
-  if (typeOf(args[2]) === 'boolean') {
-    cache.ssh = args[2];
-    args[2] = cache;
-  }
-
-  args[2] = !args[2] ? cache : args[2];
-  args[1] = undefined;
+  args.cmd = args.dest ? fmt('%s %s', cmd, args.dest) : cmd;
+  args.cmd = args.branch ? fmt('%s -b %s', args.cmd, args.branch) : args.cmd;
+  args.opts.stdio = args.opts.stdio ? args.opts.stdio : 'inherit';
 
   return args;
 }

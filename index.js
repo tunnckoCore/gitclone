@@ -11,6 +11,7 @@ var path = require('path');
 var fmt = require('util').format;
 var run = require('exec-cmd');
 var rimraf = require('rimraf');
+var kindOf = require('kind-of');
 var arrayEqual = require('array-equal');
 var handleArguments = require('handle-arguments');
 var stringify = require('stringify-github-short-url');
@@ -51,21 +52,21 @@ function checkArguments(args) {
   if (!args.pattern) {
     return error('should have at least 1 argument and he cant be function');
   }
-  if (typeOf(args.opts) === 'boolean') {
-    var o = typeOf(args.dest) === 'object' && args.dest || {};
+  if (kindOf(args.opts) === 'boolean') {
+    var o = kindOf(args.dest) === 'object' && args.dest || {};
     o.ssh = args.opts;
     args.opts = o;
   }
 
-  if (typeOf(args.dest) === 'object') {
+  if (kindOf(args.dest) === 'object') {
     args = whenDestObject(args);
   }
 
-  if (typeOf(args.pattern) === 'object') {
+  if (kindOf(args.pattern) === 'object') {
     args = whenRepoObject(args);
   }
 
-  args.opts = typeOf(args.opts) !== 'object' ? {} : args.opts;
+  args.opts = kindOf(args.opts) !== 'object' ? {} : args.opts;
   var parse = stringify.parse(args.pattern, args.opts);
 
   if (!stringify.test(parse)) {
@@ -82,7 +83,7 @@ function checkArguments(args) {
 }
 
 /**
- * Map arguments array to object with strict key names
+ * > Map arguments array to object with strict key names
  *
  * @param  {Array} `<args>`
  * @return {Object}
@@ -125,7 +126,7 @@ function whenDestObject(args) {
 function whenRepoObject(args) {
   var cache = args.pattern;
 
-  if (typeOf(cache.user) === 'string' && typeOf(cache.repo) === 'string') {
+  if (kindOf(cache.user) === 'string' && kindOf(cache.repo) === 'string') {
     args.pattern = stringify(cache);
   }
 
@@ -151,23 +152,4 @@ function buildArguments(args) {
   args.opts.stdio = args.opts.stdio ? args.opts.stdio : 'inherit';
 
   return args;
-}
-
-/**
- * > Get correct type of value
- *
- * @param  {*} `val`
- * @return {String}
- * @api private
- */
-function typeOf(val) {
-  if (typeof val !== 'object') {
-    return typeof val;
-  }
-
-  if (Array.isArray(val)) {
-    return 'array';
-  }
-
-  return {}.toString(val).slice(8, -1).toLowerCase();
 }

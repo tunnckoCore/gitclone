@@ -23,9 +23,11 @@
     "url": "https://github.com/tunnckoCore/gitclone/blob/master/license.md"
   },
   "dependencies": {
+    "array-equal": "~1.0.0",
     "exec-cmd": "~2.0.0",
     "handle-arguments": "~2.0.0",
     "handle-errors": "~1.0.0",
+    "rimraf": "~2.2.8",
     "stringify-github-short-url": "~1.0.3"
   },
   "devDependencies": {

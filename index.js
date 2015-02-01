@@ -10,6 +10,8 @@
 var path = require('path');
 var fmt = require('util').format;
 var run = require('exec-cmd');
+var rimraf = require('rimraf');
+var arrayEqual = require('array-equal');
 var handleArguments = require('handle-arguments');
 var stringify = require('stringify-github-short-url');
 var handleErrors = require('handle-errors')('gitclone');
@@ -22,7 +24,18 @@ module.exports = function gitclone() {
   var args = checkArguments(argz.args);
   args = buildArguments(args);
 
-  return run(args.cmd, args.opts, argz.callback);
+  return run(args.cmd, args.opts, argz.callback).catch(function(err) {
+    var dir = args.dest.split('/')[0];
+    if (arrayEqual(args.opts.stdio, [null, null, null])) {
+      // jscs:disable maximumLineLength
+      console.log('fatal: Remote branch %s not found in upstream origin', args.res.branch);
+      // jscs:enable maximumLineLength
+      rimraf.sync(dir);
+      throw err;
+    }
+    rimraf.sync(dir);
+    throw err;
+  });
 };
 
 /**

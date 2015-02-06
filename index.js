@@ -22,7 +22,8 @@ var type = handleErrors.type;
 // docs
 module.exports = function gitclone() {
   var argz = handleArguments(arguments);
-  argz = checkArguments(argz.args);
+  argz = mapArguments(argz.args);
+  argz = checkArguments(argz);
   argz = buildArguments(argz);
 
   return run(argz.cmd, argz.opts, argz.callback).catch(function(err) {
@@ -47,8 +48,6 @@ module.exports = function gitclone() {
  * @api private
  */
 function checkArguments(args) {
-  args = mapArguments(args);
-
   if (!args.pattern) {
     return error('should have at least 1 argument and he cant be function');
   }

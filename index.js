@@ -27,9 +27,9 @@ module.exports = function gitclone() {
   argz = buildArguments(argz);
 
   return run(argz.cmd, argz.opts, argz.callback).then(function(res) {
-    console.log(res);
+    // use `online-branch-exist`
     process.chdir(argz.dest);
-    var cmd = fmt('git checkout -qf %s', argz.branch);
+    var cmd = fmt('git checkout %s', argz.branch);
     return run(cmd, {stdio: [null, null, null]});
   })
   .catch(catchErrors);

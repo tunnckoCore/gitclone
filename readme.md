@@ -20,40 +20,79 @@ var gitclone = require('gitclone');
 ## Examples
 
 ```js
-gitclone('tunnckoCore/async-exec-cmd', {ssh: true, dest: '../destination/'})
-gitclone('tunnckoCore/async-exec-cmd', function cb() {})
-gitclone('koajs/koa#0.14.0', 'releases/v0.14.0')
-gitclone('koajs/koa#0.15.0', 'releases/v0.15.0')
-gitclone('koajs/koa#0.16.0', 'releases/v0.16.0')
-gitclone('tunnckoCore/npmls', 'dest/to/path2', true)
-gitclone('tunnckoCore/npmls', 'dest/to/path3', {stdio: 'inherit1'})
-gitclone('tunnckoCore/npmls', {stdio: 'inherit2'}, true)
-gitclone('tunnckoCore/npmls', {stdio: 'inherit3', ssh: true}, false)
+// ssh clone, token is required only if you provide branch/tag/release
+gitclone('tunnckoCore/koa-better-body', {
+  ssh: true,
+  dest: 'koa-body'
+});
+
+
+// gitclone('tunnckoCore/async-exec-cmd', function cb() {}); // ???????????
+
+// https clone specific koa release (tag) to specific folder
+gitclone('koajs/koa#0.14.0', 'koa/v0.14.0');
+gitclone('koajs/koa#0.15.0', 'koa/v0.15.0');
+gitclone('koajs/koa#0.16.0', 'koa/v0.16.0');
+
+// https clone fs-readdir's master branch to `dest/to/fsreaddir`
+gitclone('tunnckoCore/fs-readdir#master', 'dest/to/fsreaddir', {
+  token: 'my-github-personal-access-token'
+});
+
+// https clone npmls to `dest/to/path` without output
+gitclone('tunnckoCore/npmls', 'dest/to/path', {stdio: [null, null, null]});
+
+// ssh clone anonymize-ip to `dest/path/to/anonyme`,
+// because last argument is true
+gitclone('tunnckoCore/anonymize-ip', {stdio: 'inherit', options: {
+  dest: 'dest/path/to/anonyme',
+  ssh: false
+}}, true);
+
+// https clone without output, because if last argument is boolean,
+// it overrides `ssh` given in options
+gitclone('tunnckoCore/parse-function', {
+  stdio: [null, null, null],
+  ssh: true
+}, false);
+
+// https clone branch `yeah` of tunnckoCore/glob2fp repo
 gitclone({
   user: 'tunnckoCore',
   repo: 'glob2fp',
   branch: 'yeah',
   dest: 'dest/to/path4',
   ssh: true,
-  stdio: 'inherit4',
-})
-gitclone({
-  user: 'tunnckoCore',
-  repo: 'glob2fp',
-  branch: 'yeah',
+  stdio: 'inherit',
   options: {
-    dest: 'dest/to/path5',
-    ssh: true,
-    stdio: 'inherit4'
+    token: 'my-secret-token'
   }
 })
+
+// ssh clone `gh-pages` branch of tunnckoCore/blankr repo
+// with output and token, given outside of options object
 gitclone({
   user: 'tunnckoCore',
-  repo: 'glob2fp',
-  branch: 'feature',
-}, 'dest/to/path6', {
+  repo: 'blankr',
+  branch: 'gh-pages',
+  token: 'my-secret-token-outside-of-options',
+  options: {
+    dest: 'dest/blankr',
+    ssh: true,
+    stdio: 'inherit'
+  }
+})
+
+// https clone to `dest/to/ava` without output and with github token
+// from `tunnckoCore/tunnckoCore.github.io` repo
+gitclone({
+  user: 'tunnckoCore',
+  repo: 'tunnckoCore.github.io',
+  branch: 'ava',
+}, 'dest/to/ava', {
   ssh: false,
-  stdio: 'falsefalsefalse'
+  stdio: [null, null, null]
+  token: 'my-secret'
 })
 ```
 

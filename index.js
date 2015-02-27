@@ -7,17 +7,15 @@
 
 'use strict';
 
-var path = require('path');
-var fmt = require('util').format;
+var root = process.cwd();
 var run = require('exec-cmd');
-var rimraf = require('rimraf');
-var kindOf = require('kind-of');
-var arrayEqual = require('array-equal');
-var stringify = require('stringify-github-short-url');
+var error = require('./lib/errors').error;
 var handleArguments = require('handle-arguments');
 var buildArguments = require('./lib/arguments').build;
 var checkArguments = require('./lib/arguments').check;
 var mapArguments = require('./lib/arguments').map;
+var getFirstDir = require('get-first-from-filepath');
+var onlineExist = run.hybridify(require('online-branch-exist'));
 
 // docs
 module.exports = function gitclone() {
@@ -26,24 +24,29 @@ module.exports = function gitclone() {
   argz = checkArguments(argz);
   argz = buildArguments(argz);
 
-  return run(argz.cmd, argz.opts, argz.callback).then(function(res) {
-    // use `online-branch-exist`
-    process.chdir(argz.dest);
-    var cmd = fmt('git checkout %s', argz.branch);
-    return run(cmd, {stdio: [null, null, null]});
-  })
-  .catch(catchErrors);
+  console.log(argz)
+
+  return argz.branch.length ? cloneBranch(argz).then(function(res) {
+    return res ? clone(argz) : false;
+  }) : clone(argz);
 };
 
-function catchErrors(err) {
-  var dir = argz.dest.split('/')[0];
-  if (arrayEqual(argz.opts.stdio, [null, null, null])) {
-    // jscs:disable maximumLineLength
-    console.log('fatal: Remote branch %s not found in upstream origin', argz.branch);
-    // jscs:enable maximumLineLength
-    rimraf.sync(dir);
-    throw err;
-  }
-  rimraf.sync(dir);
-  throw err;
+function clone(argz) {
+  return run(argz.cmd, argz.opts, argz.callback).then(function() {
+    process.chdir(argz.dest)
+    console.log(process.cwd())
+    var stdio = [null, null, null];
+    return run('git checkout ' + argz.branch, {stdio: stdio}, argz.callback);
+  });
+}
+
+function cloneBranch(argz) {
+  return onlineExist(argz.pattern, argz.opts.token)
+  .then(function _then(res) {
+    if (res === true) {
+      console.log('avaaaaaaaaaaaaaaa')
+      return true;
+    }
+    error('remote branch or tag not exist');
+  });
 }

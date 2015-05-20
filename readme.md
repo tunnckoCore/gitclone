@@ -2,6 +2,8 @@
 
 > Clone a Github repository programmatically. Hybrid, Async and Promise API
 
+### [upcoming v2](https://github.com/tunnckoCore/gitclone/milestones/v2)
+
 ## Install
 ```
 npm i --save gitclone

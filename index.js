@@ -8,33 +8,14 @@
 'use strict'
 
 var spawn = require('spawn-commands')
-var parse = require('parse-github-short-url')
-var stringify = require('stringify-github-short-url')
+var defaults = require('gitclone-defaults')
 
-module.exports = function gitclone (owner, name, branch, ssh) {
+module.exports = function gitclone () {
   var git = 'git clone '
-  var res = null
+  var opts = defaults.apply(this, arguments)
 
-  if (typeof owner === 'string' && !arguments.length) {
-    res = parse(owner)
-  } else {
-    res = parse(stringify.apply(this, arguments))
-  }
-
-  res.ssh = owner.ssh || name && name.ssh || false
-  res.ssh = res.ssh || typeof name === 'boolean' && name || false
-  res.ssh = res.ssh || typeof branch === 'boolean' && branch || false
-  res.ssh = res.ssh || typeof ssh === 'boolean' && ssh || false
-  res.ssh = res.ssh || branch && branch.ssh || false
-  res.branch = name && name.branch || branch && branch.branch || res.branch || false
-  res.branch = typeof res.branch === 'string' && res.branch || 'master'
-  res.dest = owner && owner.dest || name && name.dest || false
-  res.dest = res.dest || branch && branch.dest || false
-  res.dest = res.dest || ssh && ssh.dest || false
-  res.dest = typeof res.dest === 'string' && res.dest || false
-
-  git += res.ssh ? 'git@github.com:' : 'https://github.com/'
-  git = git + res.repo + '.git -b ' + res.branch + (res.dest ? ' ' + res.dest : '')
+  git += opts.ssh ? 'git@github.com:' : 'https://github.com/'
+  git = git + opts.repo + '.git -b ' + opts.branch + (opts.dest ? ' ' + opts.dest : '')
 
   return spawnCommand(git)
 }

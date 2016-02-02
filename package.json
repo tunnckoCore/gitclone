@@ -11,9 +11,8 @@
     "test": "standard && node test.js"
   },
   "dependencies": {
-    "parse-github-short-url": "^3.0.0",
-    "spawn-commands": "^0.3.1",
-    "stringify-github-short-url": "^3.0.0"
+    "gitclone-defaults": "^1.0.0",
+    "spawn-commands": "^0.3.1"
   },
   "devDependencies": {
     "assertit": "^0.1.0",

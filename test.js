@@ -12,12 +12,12 @@
 var test = require('assertit')
 var gitclone = require('./index')
 
-test('object', function () {
+test('object', function (done) {
   gitclone({
     owner: 'verbose',
     name: 'verb',
     branch: 'dev'
-  })
+  }, done)
   // gitclone('jonschlinkert', 'micromatch', true, {dest: 'micro'})
 })
 

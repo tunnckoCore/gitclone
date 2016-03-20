@@ -7,7 +7,7 @@
 
 'use strict'
 
-var spawn = require('spawn-commands')
+var spawn = require('run-commands')
 var defaults = require('gitclone-defaults')
 
 module.exports = function gitclone () {
@@ -17,16 +17,5 @@ module.exports = function gitclone () {
   git += opts.ssh ? 'git@github.com:' : 'https://github.com/'
   git = git + opts.repo + '.git -b ' + opts.branch + (opts.dest ? ' ' + opts.dest : '')
 
-  return spawnCommand(git)
-}
-
-function spawnCommand (cmd) {
-  var parts = cmd.split(' ')
-  spawn({cmd: parts[0], args: parts.slice(1)}, function (err) {
-    if (err) {
-      console.error(err)
-      return process.exit(1)
-    }
-    process.exit(0)
-  })
+  return spawn(git, arguments[arguments.length - 1])
 }

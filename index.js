@@ -17,5 +17,5 @@ module.exports = function gitclone () {
   git += opts.ssh ? 'git@github.com:' : 'https://github.com/'
   git = git + opts.repo + '.git -b ' + opts.branch + (opts.dest ? ' ' + opts.dest : '')
 
-  return spawn(git, arguments[arguments.length - 1])
+  return spawn(git, opts, arguments[arguments.length - 1])
 }

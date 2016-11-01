@@ -7,15 +7,33 @@
 
 'use strict'
 
-// var spawn = require('run-commands')
-// var defaults = require('gitclone-defaults')
+var utils = require('./utils')
 
-// module.exports = function gitclone () {
-//   var git = 'git clone '
-//   var opts = defaults.apply(this, arguments)
+module.exports = function gitclone () {
+  var argz = [].slice.call(arguments)
+  var cb = argz[argz.length - 1]
+  var opts = utils.gitcloneDefaults.apply(this, argz)
+  var args = ['clone']
+  var param = opts.ssh ? 'git@github.com:' : 'https://github.com/'
 
-//   git += opts.ssh ? 'git@github.com:' : 'https://github.com/'
-//   git = git + opts.repo + '.git -b ' + opts.branch + (opts.dest ? ' ' + opts.dest : '')
+  args.push(param + opts.repository + '.git')
 
-//   return spawn(git, opts, arguments[arguments.length - 1])
-// }
+  if (opts.branch !== 'master') {
+    args.push('-b')
+    args.push(opts.branch)
+  }
+  if (opts.dest) {
+    args.push(opts.dest)
+  }
+
+  gitclone.options = gitclone.options && typeof gitclone.options === 'object'
+    ? gitclone.options
+    : { stdio: [null, null, null] }
+
+  var cp = utils.spawn('git', args, gitclone.options)
+  if (typeof cb === 'function') {
+    utils.capture(cp, cb)
+    return
+  }
+  return cp
+}

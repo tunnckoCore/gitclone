@@ -9,48 +9,77 @@
 
 'use strict'
 
-// var test = require('assertit')
-// // var gitclone = require('./index')
+var test = require('mukla')
+var gitclone = require('./index')
 
-// test('object', function (done) {
-//   done()
-//   // gitclone({
-//   //   owner: 'verbose',
-//   //   name: 'verb',
-//   //   branch: 'dev'
-//   // }, done)
-//   // gitclone('jonschlinkert', 'micromatch', true, {dest: 'micro'})
+test('should throw if first argument object and no `owner` prop', function (done) {
+  function fixture () {
+    gitclone({ bar: 'foo' }, function noop () {})
+  }
+  test.throws(fixture, TypeError)
+  test.throws(fixture, /expects `owner` to be a string/)
+  done()
+})
+
+/**
+ * Uncomment and run the tests from CLI
+ * or from Sublime's Build System
+ *
+ * Everything works, but can't test it easily,
+ * because there appear prompts for github username
+ * and github password
+ *
+ * PRs welcome for fix this thing.
+ */
+
+// var fs = require('fs')
+// var rimraf = require('rimraf')
+
+// test('should clone different than master branch', function (done) {
+//   rimraf.sync('./verb')
+//   gitclone('verbose/verb#dev', function (err) {
+//     test.strictEqual(err, null)
+
+//     fs.readFile('./verb/package.json', 'utf8', function (err, res) {
+//       if (err) return done(err)
+//       var json = JSON.parse(res)
+//       test.strictEqual(json.version, '0.9.0')
+//       test.strictEqual(typeof json.repository, 'string')
+//       rimraf.sync('./verb')
+//       done()
+//     })
+//   })
 // })
 
-// // all of examples below works
-// // gitclone({
-// //   user: 'foo',
-// //   repo: 'bar',
-// //   branch: 'zeta'
-// // }, true)
-// // gitclone({
-// //   user: 'foo',
-// //   repo: 'bar',
-// //   branch: 'dev2'
-// // })
-// // gitclone({
-// //   owner: 'foo',
-// //   name: 'bar',
-// // }, {dest: 'beta', ssh: true})
-// // gitclone({
-// //   owner: 'foo',
-// //   name: 'bar',
-// // }, {dest: 'beta'}, true)
-// // gitclone('foo/bar')
-// // gitclone('jonschlinkert', 'micromatch', true)
-// // gitclone('foo', 'bar', 'dev3')
-// // gitclone('foo', 'bar', 'dev3', {dest: 'dest3'})
-// // gitclone('foo/bar', {ssh: true})
-// // gitclone('foo/bar', {branch: 'opts'})
-// // gitclone('foo/bar', {branch: 'opts'}, {ssh: true})
-// // gitclone('foo/bar', {branch: 'opts'}, true)
-// // gitclone('foo', 'bar', 'baz', true)
-// // gitclone('foo/bar', {branch: 'qux'}, true)
-// // gitclone('foo/bar#dev', {ssh: true})
-// // gitclone('foo/bar#qux', true)
-// // gitclone('foo/bar#qux', true, {dest: 'ok'})
+// test('should get master branch by default', function (done) {
+//   rimraf.sync('./mukla')
+//   gitclone('tunnckoCore/mukla', function (err, res) {
+//     test.strictEqual(err, null)
+//     rimraf.sync('./mukla')
+//     done()
+//   })
+// })
+
+// test('should handle error if `git clone` fails', function (done) {
+//   gitclone('some-not-foo/barqux-set-not-exist', function (err) {
+//     test.ok(err)
+//     test.strictEqual(err.name, 'SpawnError')
+//     test.strictEqual(err.code, 128)
+//     done()
+//   })
+// })
+
+// test('should return a spawn stream if no callback', function (done) {
+//   var cp = gitclone('fsdfsdfsdsffdssdfdfdfdsdsfdb', 'sdfsdf')
+//   test.strictEqual(typeof cp, 'object')
+//   test.strictEqual(typeof cp.stdout, 'object')
+//   test.strictEqual(typeof cp.stderr, 'object')
+//   done()
+// })
+
+// test('should return undefined if callback passed', function (done) {
+//   rimraf.sync('./sdfs')
+//   var res = gitclone('fsdfsdffoo/sdfs#baz', function noop () {})
+//   test.strictEqual(res, undefined)
+//   done()
+// })

@@ -41,7 +41,27 @@
     "index.js",
     "utils.js"
   ],
-  "keywords": [],
+  "keywords": [
+    "api",
+    "clone",
+    "cmd",
+    "command",
+    "flexible",
+    "gh",
+    "ghclone",
+    "git",
+    "gitc",
+    "gitclone",
+    "github",
+    "github-clone",
+    "interface",
+    "powerful",
+    "program",
+    "programmatic",
+    "ui",
+    "util",
+    "utils"
+  ],
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
@@ -49,24 +69,32 @@
   },
   "verb": {
     "run": true,
-    "toc": {
-      "render": true,
-      "method": "preWrite",
-      "maxdepth": 3
-    },
+    "toc": true,
     "layout": "empty",
     "tasks": [
       "readme"
     ],
-    "lint": {
-      "reflinks": true
-    },
     "related": {
-      "list": []
+      "list": [
+        "gitclone-defaults",
+        "try-catch-callback",
+        "try-catch-core",
+        "always-done",
+        "minibase"
+      ]
     },
     "reflinks": [
       "cross-spawn",
-      "gitclone-defaults"
-    ]
+      "gitclone-defaults",
+      "always-done",
+      "async-done",
+      "base",
+      "dezalgo",
+      "once",
+      "try-catch-core"
+    ],
+    "lint": {
+      "reflinks": true
+    }
   }
 }

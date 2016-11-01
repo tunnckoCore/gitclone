@@ -9,6 +9,53 @@
 
 var utils = require('./utils')
 
+/**
+ * > Clones github repository, optionally
+ * pass destination folder. By defaults uses HTTPS
+ * to clone the repository. If you want SSH clone
+ * you should pass second, third or fourth argument
+ * boolean `true`, or object `{ssh: true}`.
+ * Pattern can be `user/repo#branch` as first
+ * argument. Or first argument `user`, second
+ * argument `repo`, third `branch`, fourth `ssh`.
+ *
+ * **Hint:** All arguments are super flexible and they are handled
+ * absolutely directly with [gitclone-defaults][],
+ * so read its [API docs](https://github.com/tunnckoCore/gitclone-defaults#api).
+ * In addition, you also can pass `callback` as last argument, otherwise
+ * it will return Spawn stream.
+ *
+ * **Example**
+ *
+ * ```js
+ * const gitclone = require('gitclone')
+ *
+ * // clones with SSH
+ * gitclone('node-minibase/minibase', true)
+ *
+ * // clone with HTTPS
+ * gitclone('node-minibase/minibase', (err) => {
+ *   if (err) return console.error(err)
+ * })
+ *
+ * // clone `dev` branch from `verbose/verb` repo
+ * gitclone('verbose/verb#dev', console.log)
+ *
+ * // clone `jonschlinkert/nanomatch` with SSH
+ * gitclone('jonchlinkert', 'nanomatch', true)
+ *
+ * // clone to different destination folder
+ * gitclone('hybridables/always-done', { dest: 'foobar' })
+ *
+ * // clone SSH + dest + branch
+ * gitclone('verbose/verb', { dest: 'verb0.9.0', branch: 'dev', ssh: true })
+ * ```
+ *
+ * @param  {Function} `[callback]` optional, if not given, returns a stream
+ * @return {Stream} if not `callback` given as last argument - a Spawn stream
+ * @api public
+ */
+
 module.exports = function gitclone () {
   var argz = [].slice.call(arguments)
   var cb = argz[argz.length - 1]

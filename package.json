@@ -1,6 +1,6 @@
 {
   "name": "gitclone",
-  "version": "0.0.0",
+  "version": "1.0.4",
   "description": "Powerful and flexible programmatic interface for the `git clone` command, using [gitclone-defaults][] and [cross-spawn][]",
   "repository": "tunnckoCore/gitclone",
   "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",

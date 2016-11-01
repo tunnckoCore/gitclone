@@ -1,87 +1,45 @@
-# [gitclone][author-www-url] [![npmjs.com][npmjs-img]][npmjs-url] [![The MIT License][license-img]][license-url] 
+# [gitclone][author-www-url] [![npmjs.com][npmjs-img]][npmjs-url] [![The MIT License][license-img]][license-url] [![npm downloads][downloads-img]][downloads-url] 
 
-> Gitclone (download) repository from Github, using `user/repo#branch` pattern. Powerful and flexible interface to `git clone` command.
+> Powerful and flexible programmatic interface for the `git clone` command, using [gitclone-defaults][] and [cross-spawn][]
 
 [![code climate][codeclimate-img]][codeclimate-url] [![standard code style][standard-img]][standard-url] [![travis build status][travis-img]][travis-url] [![coverage status][coveralls-img]][coveralls-url] [![dependency status][david-img]][david-url]
 
-
 ## Install
-```
-npm i gitclone --save
-```
+> Install with [npm](https://www.npmjs.com/)
 
+```sh
+$ npm i gitclone --save
+```
 
 ## Usage
 > For more use-cases see the [tests](./test.js)
 
 ```js
 const gitclone = require('gitclone')
-
-gitclone({
-  owner: 'gulpjs',
-  name: 'gulp',
-  branch: '4.0',
-  ssh: true
-})
-// => clones `4.0` branch `https://github.com/gulpjs/gulp/tree/4.0` into `gulp`
-
-// all of examples below works
-// gitclone({
-//   user: 'foo',
-//   repo: 'bar',
-//   branch: 'zeta'
-// }, true)
-// gitclone({
-//   user: 'foo',
-//   repo: 'bar',
-//   branch: 'dev2'
-// })
-// gitclone({
-//   owner: 'foo',
-//   name: 'bar',
-// }, {dest: 'beta', ssh: true})
-// gitclone({
-//   owner: 'foo',
-//   name: 'bar',
-// }, {dest: 'beta'}, true)
-// gitclone('foo/bar')
-// gitclone('foo', 'bar')
-// gitclone('foo', 'bar', 'dev3')
-// gitclone('foo', 'bar', 'dev3', {dest: 'dest3'})
-// gitclone('foo/bar', {ssh: true})
-// gitclone('foo/bar', {branch: 'opts'})
-// gitclone('foo/bar', {branch: 'opts'}, {ssh: true})
-// gitclone('foo/bar', {branch: 'opts'}, true)
-// gitclone('foo', 'bar', 'baz', true)
-// gitclone('foo/bar', {branch: 'qux'}, true)
-// gitclone('foo/bar#dev', {ssh: true})
-// gitclone('foo/bar#qux', true)
-// gitclone('foo/bar#qux', true, {dest: 'ok'})
 ```
-
 
 ## Contributing
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/tunnckoCore/gitclone/issues/new).  
 But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) guidelines.
 
-
 ## [Charlike Make Reagent](http://j.mp/1stW47C) [![new message to charlike][new-message-img]][new-message-url] [![freenode #charlike][freenode-img]][freenode-url]
 
-[![tunnckocore.tk][author-www-img]][author-www-url] [![keybase tunnckocore][keybase-img]][keybase-url] [![tunnckoCore npm][author-npm-img]][author-npm-url] [![tunnckoCore twitter][author-twitter-img]][author-twitter-url] [![tunnckoCore github][author-github-img]][author-github-url]
-
+[![tunnckoCore.tk][author-www-img]][author-www-url] [![keybase tunnckoCore][keybase-img]][keybase-url] [![tunnckoCore npm][author-npm-img]][author-npm-url] [![tunnckoCore twitter][author-twitter-img]][author-twitter-url] [![tunnckoCore github][author-github-img]][author-github-url]
 
 [npmjs-url]: https://www.npmjs.com/package/gitclone
 [npmjs-img]: https://img.shields.io/npm/v/gitclone.svg?label=gitclone
 
 [license-url]: https://github.com/tunnckoCore/gitclone/blob/master/LICENSE
-[license-img]: https://img.shields.io/badge/license-MIT-blue.svg
+[license-img]: https://img.shields.io/npm/l/gitclone.svg
 
+[downloads-url]: https://www.npmjs.com/package/gitclone
+[downloads-img]: https://img.shields.io/npm/dm/gitclone.svg
 
 [codeclimate-url]: https://codeclimate.com/github/tunnckoCore/gitclone
 [codeclimate-img]: https://img.shields.io/codeclimate/github/tunnckoCore/gitclone.svg
 
 [travis-url]: https://travis-ci.org/tunnckoCore/gitclone
-[travis-img]: https://img.shields.io/travis/tunnckoCore/gitclone.svg
+[travis-img]: https://img.shields.io/travis/tunnckoCore/gitclone/master.svg
 
 [coveralls-url]: https://coveralls.io/r/tunnckoCore/gitclone
 [coveralls-img]: https://img.shields.io/coveralls/tunnckoCore/gitclone.svg
@@ -91,7 +49,6 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 
 [standard-url]: https://github.com/feross/standard
 [standard-img]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
-
 
 [author-www-url]: http://www.tunnckocore.tk
 [author-www-img]: https://img.shields.io/badge/www-tunnckocore.tk-fe7d37.svg
@@ -113,3 +70,6 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 
 [new-message-url]: https://github.com/tunnckoCore/ama
 [new-message-img]: https://img.shields.io/badge/ask%20me-anything-green.svg
+
+[cross-spawn]: https://github.com/IndigoUnited/node-cross-spawn
+[gitclone-defaults]: https://github.com/tunnckocore/gitclone-defaults
